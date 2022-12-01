@@ -1,0 +1,209 @@
+   {% if portal.current_tab and portal.current_tab == "home" %}
+    <section>
+      {{ page_message }}
+    </section>
+    <section class="container-fluid px-0 fw-helpcenter mb-md-n64">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9 col-lg-6 mx-auto">
+            {% assign search_text = 'portal_translations.banner.search_text' | t %}
+            {{ portal | search_element: search_text }}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="container-fluid px-0 mt-16">
+    <div class="container">
+      <div class="row justify-content-center">
+        {%for card in portal.home_cards %}
+          {% if card.show and card.url != "/support/solutions" and card.url != "/support/tickets" %}
+            <div class="col-md-6 col-xl-3 mb-8">
+              <a class="card fw-horizontal" href="{{card.url(2)}}" aria-label={{card.label}}>
+                <div class="col-3 px-0 my-auto text-center">
+                  <div class="fw-category-icon">
+                    {{ card.image }}
+                  </div>
+                </div>
+                <div class="card-body col-9">
+                  <h2 class="mt-0 card-title fs-18 line-clamp-2">{{card.label}}</h2>
+                  <p class="line-clamp-3">{{card.description}}</p>
+                </div>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% assign solutionCards = 1 %}
+  {% assign solutionCardsLimit = 6 %}
+  {% if portal.has_solutions and solutionCardsLimit != 0 %}
+    <section class="container-fluid px-0">
+      <div class="container virke-container-md">
+        <div class="fw-section-heading text-center mt-28 mt-md-44 mb-24 mb-md-16">
+          <h2>{{ 'portal_translations.home.solutions' | t }}</h2>
+          <a href="{{ portal.solutions_home_url }}">{{ 'portal_translations.home.view_articles' | t }}</a>
+        </div>
+        <div class="row justify-content-center">
+          {% for category in portal.solution_categories %}
+            {% if solutionCards > solutionCardsLimit %}{% break %}{% endif %}
+		      {% if category.folders_count > 0 %}
+              	{% for folder in category.folders %}
+                  {% assign solutionCards = solutionCards | plus:1 %}
+
+                <div class="col-md-4 col-xs-3 virke-card-wrapper">
+                  <a class="card fw-kbase-card virke-card relative" aria-label="{{ category.name }}" href="{{ category.url }}">
+                    <div class="absolute flex">
+                    <div class="virke-icon-wrapper">
+                      {% if category.icon %}
+                        <img src="{{category.icon}}" class="virke-icon" alt="{{ category.name }}">
+                      
+                      {% else %}
+                        {% case category.id %}
+                          {% when 77000206946 %}
+                            <!-- Om virkes digitale produkter -->
+							<img src="https://user-images.githubusercontent.com/5765650/199672042-99d58a43-8e0a-41c4-95d1-8e5ee91a3145.png" class="virke-icon"/>
+                          {% when 77000207066 %}
+                            <!-- Virkes håndbøker -->
+                            <img src="https://www.virke.no/globalassets/1.illustrasjoner/png/virke_innovasjon.png" class="virke-icon"/>
+                          {% when 77000208721 %}
+                            <!-- Styres -->
+                            <img src="https://www.virke.no/globalassets/1.illustrasjoner/png/virke_juss.png" class="virke-icon"/>
+
+                          {%when 77000208723%}
+                          <!-- Arbeidsgiverguiden -->
+                          <img src="https://anti-brands.fra1.digitaloceanspaces.com/brands/virke/media/_1200x1665_fit_center-center_82_none/virke_lonn_tariff_v2.png" class="virke-icon" />
+                      
+                      	  {%when 77000208748%}
+                          <!-- Mingle -->
+                          <img src="https://anti-brands.fra1.digitaloceanspaces.com/brands/virke/media/_1200x855_fit_center-center_82_none/virke_politikk_v1.png" class="virke-icon" />
+                          {% else %}
+                            <span class="icon-category"></span>
+                        {% endcase %}
+                        
+                      {% endif %}
+                    </div>
+                    <p class="virke-card-title fs-18 line-clamp-1">{{ category.name }}</p>
+                        </div>
+                  </a>
+                  
+            	</div>
+                {% break %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+       
+          <div class="col-md-4 col-xs-3 virke-card-wrapper">
+            <a class="card fw-kbase-card virke-card relative" aria-label="E-signering" href="/support/solutions/folders/77000322088">
+              <div class="absolute flex">
+                <div class="virke-icon-wrapper">
+                  <img src="https://anti-brands.fra1.digitaloceanspaces.com/brands/virke/media/_1200x1337_fit_center-center_82_none/virke_tjenester_v2.png" class="virke-icon" alt="E-signering">
+                </div>
+                <p class="virke-card-title fs-18 line-clamp-1">E-signering</p>
+              </div>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% assign forumCards = 1 %}
+  {% assign forumCardsLimit = 3 %}
+  {% if portal.has_forums and forumCardsLimit != 0 %}
+    <section class="container-fluid px-0 pb-60">
+      <div class="container">
+        <div class="fw-section-heading text-center mt-28 mt-md-44 mb-24 mb-md-16">
+          <h2>{{ 'portal_translations.home.forums' | t }}</h2>
+          <a href="{{ portal.discussions_home_url }}">{{ 'portal_translations.home.view_topics' | t }}</a>
+        </div>
+        <div class="row justify-content-center">
+          {% for category in portal.forum_categories %}
+            {% if forumCards > forumCardsLimit %}{% break %}{% endif %}
+            {% if category.forums_count > 0 %}
+              {% for forum in category.forums %}
+                {% assign forumCards = forumCards | plus:1 %}
+                <div class="col-md-4 col-xl-3 mb-8">
+                  <a class="card h-100" href="{{ category.url }}" aria-label="{{ category.name }}">
+                    <div class="card-body">
+                      <p class="mt-0 card-title fs-18 line-clamp-2">{{ category.name }}</p>
+                      <p class="line-clamp-2">{{ category.description }}</p>
+                    </div>
+                  </a>
+                </div>
+                {% break %}
+              {% endfor %}
+            {% endif %}
+         {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="container-fluid px-0 pt-60 pb-44 bg-light">
+    <div class="container">
+    {% if portal.has_solutions %}
+      {% assign articles = portal | popular_articles:4 %}
+      {% if articles.size > 0 %}
+        <div class="col-xl-9 mx-auto mb-32">
+          <div class="fw-section-heading row mb-16">
+            <div class="col-md-8 text-center text-lg-start">
+              <h4>{{ 'portal_translations.home.popular_articles' | t }}</h4>
+            </div>
+            <div class="col-md-4 text-center text-end">
+              <a href="{{portal.solutions_home_url}}">{{ 'portal_translations.home.view_articles' | t }}</a>
+            </div>
+          </div>
+          <div class="fw-articles">
+            <div class="row">
+              {% for article in articles %}
+              <a class="col-md-6 fw-article-info d-flex" href="{{article.url}}" aria-label='{{ 'portal_translations.home.url-aria-label' | t }}'>
+                <div class="pt-4 pe-8"><span class="icon-article pr-8"></span></div>
+                <div>
+                  <p class="fs-18 semi-bold line-clamp-2">{{article.title"}}</p>
+                  <p class="line-clamp-2 fw-meta-info">{{ 'portal_translations.home.article.modified_on' | t }} {{article.recent_modified}} {{ 'portal_translations.home.article.by' | t }} {{article.author}}
+                  </p>
+                </div>
+                <p></p>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if portal.has_forums %}
+      {% assign topics = portal.most_viewed_topics %}
+      {% if topics.size > 0 %}
+        <div class="col-xl-9 mx-auto">
+          <div class="fw-section-heading row mb-16">
+            <div class="col-md-8  text-center text-lg-start">
+              <h4>{{ 'portal_translations.home.treanding_topics' | t }}</h4>
+            </div>
+            <div class="col-md-4 text-center text-end">
+              <a href="{{portal.discussions_home_url}}">{{ 'portal_translations.home.view_topics' | t }}</a>
+            </div>
+          </div>
+          <div class="fw-articles odd-count">
+            <div class="row">
+              {% for topic in topics limit:4 %}
+              <a class="col-md-6 fw-article-info d-flex" href="{{topic.topic_url}}" aria-label="{% translate portal_translations.home.url-aria-label %}">
+                <div class="pt-4 pe-8"><span class="icon-topic pe-8"></span></div>
+                <div>
+                  <p class="fs-18 semi-bold line-clamp-2">{{ topic.title }}</p>
+                  <p class="line-clamp-2 fw-meta-info">{% translate portal_translations.home.topic.created_on %} {{topic.created_on_strftime}} {% translate portal_translations.home.topic.by %} {{topic.author_name}}</p>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+    </div>
+  </section>

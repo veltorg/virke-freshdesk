@@ -1,0 +1,63 @@
+.fw-helpcenter {
+  background: none;
+}
+
+@media (min-width: 992px) {
+  .virke-container-md {
+    max-width: 800px;
+  }
+}
+
+.virke-card-wrapper {
+  padding-top: 32px;
+  padding: 12px;
+}
+
+.virke-card {
+  aspect-ratio: 1;
+}
+
+.virke-card-title {
+  color: var(--fw-card-fg);
+  font-weight: 600;
+  font-size: 1.125rem !important;
+  box-sizing: border-box;
+}
+
+.relative{
+  position: relative
+}
+
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.virke-card-body {
+  width: 100%;
+  height: 100%
+}
+
+.virke-icon-wrapper {
+  width: auto;
+  max-width: 60%;
+  max-height: 60%
+}
+
+.virke-icon {
+  max-width: 100%;
+  max-height: 100%;
+}
