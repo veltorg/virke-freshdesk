@@ -22,9 +22,17 @@
             <div class="col-md-6 col-xl-3 mb-8">
               <a class="card fw-horizontal" href="{{card.url(2)}}" aria-label={{card.label}}>
                 <div class="col-3 px-0 my-auto text-center">
-                  <div class="fw-category-icon">
-                    {{ card.image }}
-                  </div>
+                  {% if card.url == '/support/tickets/new' %}
+                  <img src="https://anti-brands.fra1.digitaloceanspaces.com/brands/virke/media/_1200x1589_fit_center-center_82_none/virke_viervirke_v2.png" />
+                  {% else %}
+                    <div class="fw-category-icon">
+                           {{ card.image }}
+                          </div>
+                  {% endif %}
+                  
+                
+               
+              
                 </div>
                 <div class="card-body col-9">
                   <h2 class="mt-0 card-title fs-18 line-clamp-2">{{card.label}}</h2>
